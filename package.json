@@ -1,0 +1,41 @@
+{
+  "name": "bodyweb",
+  "version": "1.0.0",
+  "description": "body simulator based on three.js",
+  "main": "main.js",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "html": "^1.0.0",
+    "mysql": "^2.18.1",
+    "sanitize-html": "^2.4.0",
+    "three": "^0.131.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thwnsdyd/bodyWeb.git"
+  },
+  "keywords": [
+    "\"simulator\"",
+    "\"body",
+    "change\""
+  ],
+  "author": "thwnsdyd",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thwnsdyd/bodyWeb/issues"
+  },
+  "homepage": "https://github.com/thwnsdyd/bodyWeb#readme"
+}

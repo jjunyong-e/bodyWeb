@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+	<meta charset='UTF-8' />
+	<title>체형 변화 시뮬레이터</title>
+	<link rel='stylesheet' href='static/css/style.css' />
+</head>
+<body>
+<h1>체형 변화 시뮬레이터</h1>
+<h2 id='userInfo'></h2>
+<h3>신체 정보 입력하기</h3>
+<form action='userinfo.php' method='post'>
+	성별 : <label>
+	<input type='radio' name='sex' value='female'>
+	여성
+</label>
+	<label>
+		<input type='radio' name='sex' value='male'>
+		남성
+	</label><br>
+	<label>
+		나이 :
+		<input type='text' name='age' placeholder='나이 ' onblur='this.placeholder = "나이"'
+					 onfocus='this.placeholder = ""'>
+	</label><br>
+	<label>
+		키 :
+		<input type='text' name='height' placeholder='키(cm)' onblur="this.placeholder='키(cm)'"
+					 onfocus='this.placeholder = ""'>
+	</label><br>
+	<label>
+		체중 :
+		<input type='text' name='weight' placeholder='체중(kg)'
+					 onblur="this.placeholder  = '체중(kg)'" onfocus="this.placeholder = ''">
+	</label><br>
+	<label>
+		인심 :
+		<input type='text' name='inseam' placeholder='인심길이(cm)' onblur="this.placeholder='인심길이(cm)'"
+					 onfocus='this.placeholder = ""'>
+	</label><br>
+	<label>
+		팔길이 :
+		<input type='text' name='armLength' placeholder='팔길이(cm)' onblur="this.placeholder = '팔길이(cm)'"
+					 onfocus='this.placeholder = ""'>
+	</label><br>
+	<label>
+		어깨 너비 :
+		<input type='text' name='shoulderLength' placeholder='어깨 너비(cm)'
+					 onblur="this.placeholder = '어깨 너비(cm)'" onfocus='this.placeholder =""'>
+	</label><br>
+	<label>
+		가슴 둘레 :
+		<input type='text' name='chestCirc' placeholder='가슴 둘레(cm)'
+					 onblur="this.placeholder = '가슴 둘레(cm)'" onfocus='this.placeholder =""'>
+	</label><br>
+	<label>
+		허리 둘레 :
+		<input type='text' name='waistCirc' placeholder='허리 둘레(cm)'
+					 onblur="this.placeholder = '허리 둘레(cm)'" onfocus='this.placeholder = ""'>
+	</label><br>
+	<label>
+		엉덩이 둘레 :
+		<input type='text' name='hipsCirc' placeholder='엉덩이 둘레(cm)'
+					 onblur="this.placeholder = '엉덩이 둘레(cm)'" onfocus='this.placeholder = ""'>
+	</label><br>
+	<label>
+		허벅지 둘레 :
+		<input type='text' name='thighCirc' placeholder='허벅지 둘레(cm)'
+					 onblur="this.placeholder = '허벅지 둘레(cm)'" onfocus='this.placeholder =""'>
+	</label><br>
+	<label>
+		종아리 둘레 :
+		<input type='text' name='calfCirc' placeholder='종아리둘레' onblur="this.placeholder = '종아리 둘레(cm)'"
+					 onfocus='this.placeholder =""'>
+	</label><br>
+	<label>
+		머리 너비 :
+		<input type='text' name='headWidth' placeholder='머리 너비(cm)'
+					 onfocus="this.placeholder = '머리 너비(cm)'" onblur='this.placeholder = ""'>
+	</label><br>
+	<input type='submit' name='infoSubmit' value='infoSubmit'>
+</form>
+
+<h2 id='exerciseInfo'>
+	운동 정보 입력하기
+</h2>
+
+</body>
+</html>
