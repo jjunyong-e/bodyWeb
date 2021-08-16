@@ -24,7 +24,7 @@ $headWidth = $_POST['headWidth'];
 //db에 값 입력
 
 if (isset($_POST['infoSubmit'])) {
-    mysqli_query($conn, "INSERT INTO userBodyData (age, sex, height,weight,inseam,armLength,shoulderLength,chestCirc,waistCirc,hipCirc,thighCirc,armCirc,calfCirc,headWidth) VALUES ($age,$sex,$height,$weight,$inseam,$armLength,$shoulderLength,$chestCirc,$waistCirc,$hipCirc,$thighCirc,$armCirc,$calfCirc,$headWidth)");
+    mysqli_query($conn, "INSERT INTO userBodyData (age, sex, height,weight,inseam,armLength,shoulderLength,chestCirc,waistCirc,hipCirc,thighCirc,armCirc,calfCirc,headWidth) VALUES ('$age','$sex','$height','$weight','$inseam','$armLength','$shoulderLength','$chestCirc','$waistCirc','$hipCirc','$thighCirc','$armCirc','$calfCirc','$headWidth')");
 
 //
 }
