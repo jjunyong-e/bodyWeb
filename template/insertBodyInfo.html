@@ -3,19 +3,19 @@
 <head>
 	<meta charset='UTF-8' />
 	<title>체형 변화 시뮬레이터</title>
-	<link rel='stylesheet' href='static/css/style.css' />
+	<!--	<link rel='stylesheet' href='../static/css/style.css' />-->
 </head>
 <body>
 <h1>체형 변화 시뮬레이터</h1>
 <h2 id='userInfo'></h2>
 <h3>신체 정보 입력하기</h3>
-<form action='userinfo.php' method='post'>
+<form action='/insertBodyinfo' method='POST'>
 	성별 : <label>
-	<input type='radio' name='sex' value='female'>
+	<input type='radio' name='gender' value='female'>
 	여성
 </label>
 	<label>
-		<input type='radio' name='sex' value='male'>
+		<input type='radio' name='gender' value='male'>
 		남성
 	</label><br>
 	<label>
@@ -60,13 +60,18 @@
 	</label><br>
 	<label>
 		엉덩이 둘레 :
-		<input type='text' name='hipsCirc' placeholder='엉덩이 둘레(cm)'
+		<input type='text' name='hipCirc' placeholder='엉덩이 둘레(cm)'
 					 onblur="this.placeholder = '엉덩이 둘레(cm)'" onfocus='this.placeholder = ""'>
 	</label><br>
 	<label>
 		허벅지 둘레 :
 		<input type='text' name='thighCirc' placeholder='허벅지 둘레(cm)'
 					 onblur="this.placeholder = '허벅지 둘레(cm)'" onfocus='this.placeholder =""'>
+	</label><br>
+	<label>
+		팔 둘레 :
+		<input type='text' name='armCirc' placeholder='팔 둘레(cm)' onblur="this.placeholder = '팔 둘레(cm)'"
+					 onfocus='this.placeholder =""'>
 	</label><br>
 	<label>
 		종아리 둘레 :
@@ -81,9 +86,6 @@
 	<input type='submit' name='infoSubmit' value='infoSubmit'>
 </form>
 
-<h2 id='exerciseInfo'>
-	운동 정보 입력하기
-</h2>
 
 </body>
 </html>

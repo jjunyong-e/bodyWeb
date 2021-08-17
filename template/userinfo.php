@@ -1,9 +1,9 @@
 <?php
-
-$conn = mysqli_connect('localhost',
-    'root',
-    'grom0419',
-    'BodyWebDB');
+$host = "localhost";
+$username = "root";
+$password = "grom0419";
+$database = "bodyWebDB";
+$conn = mysqli_connect($host, $username, $password, $database);
 
 //폼값 정의
 $age = $_POST['age'];
@@ -20,11 +20,11 @@ $thighCirc = $_POST['thighCirc'];
 $armCirc = $_POST['armCirc'];
 $calfCirc = $_POST['calfCirc'];
 $headWidth = $_POST['headWidth'];
-
+$submit = $_POST['infoSubmit'];
 //db에 값 입력
 
-if (isset($_POST['infoSubmit'])) {
-    mysqli_query($conn, "INSERT INTO userBodyData (age, sex, height,weight,inseam,armLength,shoulderLength,chestCirc,waistCirc,hipCirc,thighCirc,armCirc,calfCirc,headWidth) VALUES ('$age','$sex','$height','$weight','$inseam','$armLength','$shoulderLength','$chestCirc','$waistCirc','$hipCirc','$thighCirc','$armCirc','$calfCirc','$headWidth')");
+if (isset($submit)) {
+    mysqli_query($conn, "INSERT INTO userBodyData (age, gender, height,weight,inseam,armLength,shoulderLength,chestCirc,waistCirc,hipCirc,thighCirc,armCirc,calfCirc,headWidth) VALUES ('$age','$sex','$height','$weight','$inseam','$armLength','$shoulderLength','$chestCirc','$waistCirc','$hipCirc','$thighCirc','$armCirc','$calfCirc','$headWidth')");
 
 //
 }
