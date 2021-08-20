@@ -1,132 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Female Body Changing Simulator</title>
+  </head>
 
-<head>
-	<meta charset='utf-8'>
-	<title>My first three.js app</title>
-	<style>
-    body {
-      margin: 0;
-    }
+  <body ontouchstart="">
+    <!-- 제목 -->
+    <h1>신체 시뮬레이터</h1>
+    <!-- 성별 선택 -->
 
-    canvas {
-      width: 100%;
-      height: 100%
-    }
-	</style>
-</head>
+    <!-- 신체 정보 및 운동정보 입력창 -->
 
-<body>
-<!-- Three js -->
-<script src='https://threejs.org/build/three.min.js'></script>
+    <script type="module">
+      import * as THREE from "https://cdn.skypack.dev/three";
+      import { OrbitControls } from "../js/OrbitControls.js";
+      import { OBJLoader } from "../js/objloader.js";
+      import { APP } from "../js/app.js";
+      import { MeshNormalMaterial } from "../js/MeshNormalMaterial.js";
 
-<!-- WebGL 지원유무 https://github.com/mrdoob/three.js/blob/master/examples/js/WebGL.js 참고 -->
-<script src='./WebGL.js'></script>
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera(75, 1 / 2, 1, 5000);
+      camera.position.x = 0;
+      camera.position.y = 2200;
+      camera.position.z = -1600;
 
-<!-- OrbitControls.js allow the camera to orbit around a target 마우스와 카메라를 상호작용하게 합니다. -->
-<script src='https://threejs.org/examples/js/controls/OrbitControls.js'></script>
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth / 2, window.innerHeight);
+      renderer.setClearColor(0xffffff);
+      renderer.border;
+      document.body.appendChild(renderer.domElement);
 
-<!-- OBJ Loader를 사용하기 위해 추가. https://github.com/mrdoob/three.js/blob/master/
-examples/js/loaders/OBJLoader.js 와 동일 소스 -->
-<script src='./objloader.js'></script>
+      var controls = new OrbitControls(camera, renderer.domElement);
+      controls.update();
 
-<script>
-	window.onload = function(e) {
+      animate();
 
-		let scene = new THREE.Scene();
-		let light;
-		let camera;
-		let loader; // OBJLoader 객체를 넣을 변수를 선언합니다.
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+      }
 
-		initThree();
-		addDirectionalLight();
-		loadObjLoader();
+      var loader = new OBJLoader();
+      // var material = new MeshNormalMaterial();
+      // loader.setMaterials(material);
+      var object;
+      var body;
+      loader.load("../model/obj/5_0010.obj", function (object) {
+        object.traverse(function (body) {
+          if (body instanceof THREE.Mesh) {
+            // body.material = material;
+            body.rotation.x = (Math.PI / 360) * -100;
+            scene.add(body);
+          }
+        });
 
-		/**
-		 * DirectionalLight를 추가하는 함수
-		 *
-		 * @method addDirectionalLight
-		 */
-		function addDirectionalLight() {
+        scene.add(object);
+        return;
+      });
 
-			light = new THREE.DirectionalLight(0xffffff, 1);
-			light.castShadow = true;
-			light.position.x = 5;
-			light.position.y = 5;
-			light.position.z = 5;
-			scene.add(light);
-		}
-
-		/**
-		 * .obj 파일의 모델을 로드하는 함수
-		 *
-		 * @method loadObjLoader
-		 */
-		function loadObjLoader() {
-			loader = new THREE.OBJLoader();
-			loader.load('/Users/junyongso/Desktop/Google Drive/obj/5_0010.obj', function(object) {
-				// 모델 로드가 완료되었을때 호출되는 함수
-				scene.add(object);
-			}, function(xhr) {
-				// 모델이 로드되는 동안 호출되는 함수
-				console.log(xhr.loaded / xhr.total * 100, '% loaded');
-			}, function(error) {
-				// 모델 로드가 실패했을 때 호출하는 함수
-				alert('모델을 로드 중 오류가 발생하였습니다.');
-			});
-		}
-
-		/**
-		 * Threejs 초기화 함수
-		 *
-		 * @method initThree
-		 */
-		function initThree() {
-			// 브라우저가 WebGL을 지원하는지 체크
-			if (WEBGL.isWebGLAvailable()) {
-				console.log('이 브라우저는 WEBGL을 지원합니다.');
-			} else {
-				console.log('이 브라우저는 WEBGL을 지원하지 않습니다.');
-			}
-
-			camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-
-			let renderer = new THREE.WebGLRenderer({
-				antialias: true,
-			});
-			renderer.setSize(window.innerWidth, window.innerHeight);
-			renderer.shadowMap.enabled = true;
-			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-			document.body.appendChild(renderer.domElement);
-
-			let axes = new THREE.AxisHelper(10);
-			scene.add(axes);
-
-			camera.position.x = 2;
-			camera.position.y = 1;
-			camera.position.z = 1;
-
-			controls = new THREE.OrbitControls(camera);
-			controls.rotateSpeed = 1.0;
-			controls.zoomSpeed = 1.2;
-			controls.panSpeed = 0.8;
-			controls.minDistance = 5;
-			controls.maxDistance = 100;
-
-			function animate() {
-				requestAnimationFrame(animate);
-
-				renderer.render(scene, camera);
-				controls.update();
-			}
-
-			animate();
-		}
-	};
-</script>
-</body>
-
+      // 크기측정 함수부분
+    </script>
+  </body>
 </html>
-
-
-출처: https://dev-t-blog.tistory.com/24 [dev-t-blog]

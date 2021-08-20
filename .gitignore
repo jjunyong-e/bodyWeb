@@ -1,0 +1,25 @@
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+model
+libs
+node_modules
+node_modules
+!/js/
+js/app.js
+js/constants.js
+js/EventDispatcher.js
+js/Material.js
+js/MathUtils.js
+js/MeshNormalMaterial.js
+js/objloader.js
+js/OrbitControls.js
+js/three.module.js
+js/Vector2.js
+js/VRButton.js
+node_modules
