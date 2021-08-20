@@ -1,58 +1,59 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Female Body Changing Simulator</title>
-  </head>
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Female Body Changing Simulator</title>
+</head>
 
-  <body ontouchstart="">
-    <!-- 제목 -->
-    <h1>신체 시뮬레이터</h1>
-    <!-- 성별 선택 -->
+<body ontouchstart="">
+<!-- 제목 -->
+<h1>신체 시뮬레이터</h1>
+<!-- 성별 선택 -->
 
-    <!-- 신체 정보 및 운동정보 입력창 -->
+<!-- 신체 정보 및 운동정보 입력창 -->
 
-    <script type="module">
-      import * as THREE from "https://cdn.skypack.dev/three";
-      import { OrbitControls } from "../js/OrbitControls.js";
-      import { OBJLoader } from "../js/objloader.js";
-      import { APP } from "../js/app.js";
-      import { MeshNormalMaterial } from "../js/MeshNormalMaterial.js";
+<script type="module">
+  import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.122.0/build/three.module.js";
+  import {OrbitControls} from "https://cdn.jsdelivr.net/npm/three@0.122.0/examples/jsm/controls/OrbitControls.js";
+  import {OBJLoader} from "https://cdn.jsdelivr.net/npm/three@0.122.0/examples/jsm/loaders/OBJLoader.js";
+  // import {APP} from "../js/app.js";
+  import {MeshNormalMaterial} from "https://cdn.jsdelivr.net/npm/three@0.122.0/src/materials/MeshNormalMaterial.js";
 
-      var scene = new THREE.Scene();
-      var camera = new THREE.PerspectiveCamera(75, 1 / 2, 1, 5000);
-      camera.position.x = 0;
-      camera.position.y = 2200;
-      camera.position.z = -1600;
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(75, 1 / 2, 1, 5000);
+  camera.position.x = 0;
+  camera.position.y = 2200;
+  camera.position.z = -1600;
 
-      var renderer = new THREE.WebGLRenderer();
-      renderer.setSize(window.innerWidth / 2, window.innerHeight);
-      renderer.setClearColor(0xffffff);
-      renderer.border;
-      document.body.appendChild(renderer.domElement);
+  var renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth / 2, window.innerHeight);
+  renderer.setClearColor(0xffffff);
+  renderer.border;
+  document.body.appendChild(renderer.domElement);
 
-      var controls = new OrbitControls(camera, renderer.domElement);
-      controls.update();
+  var controls = new OrbitControls(camera, renderer.domElement);
+  controls.update();
 
-      animate();
+  animate();
 
-      function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
-        renderer.render(scene, camera);
-      }
+  function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+  }
 
-      var loader = new OBJLoader();
-      // var material = new MeshNormalMaterial();
-      // loader.setMaterials(material);
-      var object;
-      var body;
-      loader.load("../model/obj/5_0010.obj", function (object) {
+  var loader = new OBJLoader();
+  var material = new MeshNormalMaterial();
+  loader.setMaterials(material);
+  var object;
+  var body;
+  loader.load("/5_0010.obj",
+      function (object) {
         object.traverse(function (body) {
           if (body instanceof THREE.Mesh) {
-            // body.material = material;
+            body.material = material;
             body.rotation.x = (Math.PI / 360) * -100;
             scene.add(body);
           }
@@ -62,7 +63,7 @@
         return;
       });
 
-      // 크기측정 함수부분
-    </script>
-  </body>
+  // 크기측정 함수부분
+</script>
+</body>
 </html>

@@ -7,6 +7,7 @@ const ejs = require("ejs");
 const app = express();
 const port = 3000;
 const mysql = require("mysql2");
+const static = require('serve-static');
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -115,8 +116,8 @@ app.post("/insertexerInfo", function (request, response) {
                 console.error("error : ", err);
               } else {
                 const filename = rows[0].id;
-                var insertfilename = "INSERT INTO objName(filename) VALUES(?)";
-                db.query(insertfilename, [filename + ".obj"],
+                db.query(`INSERT INTO objName (filename)
+                          VALUES (?)`, [filename + ".obj"],
                     function (error, result) {
                       if (error) {
                         console.error("error : ", error);
@@ -152,13 +153,15 @@ app.post("/insertexerInfo", function (request, response) {
                 console.error("error : ", err);
               } else {
                 const filename = rows[0].id;
-                var insertfilename = "INSERT INTO objName (filename) VALUES (?)";
-                db.query(insertfilename, [filename + ".obj"],
+                db.query(`INSERT INTO objName (filename)
+                          VALUES (?)`, [filename + ".obj"],
                     function (error, result) {
                       if (error) {
                         console.error("error : ", error);
                       }
-                    });
+                    }
+                )
+                ;
               }
             }
         );
@@ -170,6 +173,7 @@ app.post("/insertexerInfo", function (request, response) {
   response.end();
 });
 
+app.use(static(path.join(__dirname, 'model/obj')));
 app.get("/renderingModel", function (req, res) {
   res.sendFile(path.join(__dirname + "/template/renderingModel.html"));
 });
