@@ -5,7 +5,7 @@ const path = require("path");
 const url = require("url");
 const ejs = require("ejs");
 const app = express();
-const port = 3000;
+const port = 5500;
 const mysql = require("mysql2");
 const static = require('serve-static');
 
@@ -14,6 +14,7 @@ const db = mysql.createConnection({
   user: "root",
   password: "grom0419",
   database: "BodyWebDB",
+  multipleStatements: true
 });
 db.connect();
 app.use(bodyParser.urlencoded({extended: true}));
@@ -65,214 +66,180 @@ app.post("/insertBodyinfo", function (request, response) {
         }
       }
   );
-  response.writeHead(302, {Location: "/insertexerInfo"});
+
+  response.writeHead(302, {Location: "/insertExerInfo"});
   response.end();
 });
 
-app.get("/insertexerInfo", (req, res) =>
-    res.sendFile(path.join(__dirname + "/template/insertExerInfo.html"))
-);
-app.post("/insertexerInfo", function (request, response) {
-  db.query("SELECT * FROM userBodyData", function (err, rows, fields) {
+// app.get("/insertExerInfo", function (req, res, next) {
+//   // res.sendFile(path.join(__dirname + "/template/insertExerInfo.html"))
+//   var result = [];
+//   console.log(result)
+//   var getinfo = function (callback) {
+//     db.query("SELECT * FROM userBodyData", function (err, res, fields) {
+//       if (err) {
+//         return callback(err);
+//       }
+//       if (res.length) {
+//         for (var i = 0; i < res.length; i++) {
+//           result.push(res[i]);
+//         }
+//       }
+//       callback(null, result);
+//     });
+//   };
+//   console.log("callfunction")
+//   getinfo(function (err, result) {
+//     if (err) {
+//       console.log("err")
+//     } else {
+//       console.log(result)
+//     }
+//
+//   })
+//
+//   if (gender_ == "male") {
+//     console.log(gender_)
+//     var selectInsertModelSql =
+//         "INSERT INTO objName(filename) SELECT maleData.id  FROM maleData WHERE (age = ? and height = ? and weight = ? and inseam = ? and armLength = ? and shoulderLength = ? and chestCirc = ? and waistCirc = ? and hipCirc = ? and thighCirc = ? and armCirc = ? and calfCirc = ? and headWidth = ?)";
+//     db.query(
+//         selectInsertMModelSql,
+//         [
+//           age_,
+//           height_,
+//           weight_,
+//           inseam_,
+//           armLength_,
+//           shoulderLength_,
+//           chestCirc_,
+//           waistCirc_,
+//           hipCirc_,
+//           thighCirc_,
+//           armCirc_,
+//           calfCirc_,
+//           headWidth_,
+//         ], function (err, result) {
+//           if (!err) {
+//             console.log(result)
+//           }
+//         })
+//   } else {
+//     var selectInsertFModelSql =
+//         "INSERT INTO objName(filename) SELECT femaleData.id FROM femaleData WHERE (age = ? and height = ? and weight = ? and inseam = ? and armLength = ? and shoulderLength = ? and chestCirc = ? and waistCirc = ? and hipCirc = ? and thighCirc = ? and armCirc = ? and calfCirc = ? and headWidth = ?)"
+//     db.query(
+//         selectInsertFModelSql,
+//         [
+//           age_,
+//           height_,
+//           weight_,
+//           inseam_,
+//           armLength_,
+//           shoulderLength_,
+//           chestCirc_,
+//           waistCirc_,
+//           hipCirc_,
+//           thighCirc_,
+//           armCirc_,
+//           calfCirc_,
+//           headWidth_,
+//         ], function (err, result) {
+//           if (!err) {
+//             console.log(result)
+//           }
+//         });
+//   }
+//   response.writeHead(302, {Location: "/renderingModel"});
+//   response.end();
+// });
+app.get("/insertexerInfo", function (request, response) {
+  var result = [];
+  console.log(result)
+  var getinfo = function (callback) {
+    db.query("SELECT * FROM userBodyData", function (err, res, fields) {
+      if (err) {
+        return callback(err);
+      }
+      if (res.length) {
+        for (var i = 0; i < res.length; i++) {
+          result.push(res[i]);
+        }
+      }
+      callback(null, result);
+    });
+  };
+  console.log("callfunction")
+  getinfo(function (err, result) {
     if (err) {
-      throw err;
+      console.log("err")
     } else {
-      var gender_ = rows[0].gender;
-      var age_ = rows[0].age;
-      var height_ = rows[0].height;
-      var weight_ = rows[0].weight;
-      var inseam_ = rows[0].inseam;
-      var armLength_ = rows[0].armLength;
-      var shoulderLength_ = rows[0].shoulderLength;
-      var chestCirc_ = rows[0].chestCirc;
-      var waistCirc_ = rows[0].waistCirc;
-      var hipCirc_ = rows[0].hipCirc;
-      var thighCirc_ = rows[0].thighCirc;
-      var armCirc_ = rows[0].armCirc;
-      var calfCirc_ = rows[0].calfCirc;
-      var headWidth_ = rows[0].headWidth;
-      if (gender_ === "male") {
-        var selectModelSql =
-            "SELECT id FROM maleData WHERE (age = ? and height = ? and weight = ? and inseam = ? and armLength = ? and shoulderLength = ? and chestCirc = ? and waistCirc = ? and hipCirc = ? and thighCirc = ? and armCirc = ? and calfCirc = ? and headWidth = ?)";
+      var gender_ = result[0].gender
+      console.log(result[0].gender)
+      if (result[0].gender == "male") {
+        // var selectInsertModelSql =
+        //     "INSERT INTO objName(filename) SELECT maleData.id  FROM maleData WHERE (age = ? and height = ? and weight = ? and inseam = ? and armLength = ? and shoulderLength = ? and chestCirc = ? and waistCirc = ? and hipCirc = ? and thighCirc = ? and armCirc = ? and calfCirc = ? and headWidth = ?)";
         db.query(
-            selectModelSql,
+            "INSERT INTO objName(filename) SELECT maleData.id  FROM maleData WHERE (age = ? and height = ? and weight = ? and inseam = ? and armLength = ? and shoulderLength = ? and chestCirc = ? and waistCirc = ? and hipCirc = ? and thighCirc = ? and armCirc = ? and calfCirc = ? and headWidth = ?)"
+            ,
             [
-              age_,
-              height_,
-              weight_,
-              inseam_,
-              armLength_,
-              shoulderLength_,
-              chestCirc_,
-              waistCirc_,
-              hipCirc_,
-              thighCirc_,
-              armCirc_,
-              calfCirc_,
-              headWidth_,
+              result[0].age,
+              result[0].height,
+              result[0].weight,
+              result[0].inseam,
+              result[0].armLength,
+              result[0].shoulderLength,
+              result[0].chestCirc,
+              result[0].waistCirc,
+              result[0].hipCirc,
+              result[0].thighCirc,
+              result[0].armCirc,
+              result[0].calfCirc,
+              result[0].headWidth,
             ],
-            function (err, rows, fields) {
-              if (err) {
-                console.error("error : ", err);
+            function (err, result) {
+              if (!err) {
+                console.log(result)
               } else {
-                const filename = rows[0].id;
-                db.query(`INSERT INTO objName (filename)
-                          VALUES (?)`, [filename + ".obj"],
-                    function (error, result) {
-                      if (error) {
-                        console.error("error : ", error);
-                      }
-                    }
-                )
-                ;
+                console.error(err)
               }
-            }
-        );
+            });
       } else {
-        var selectModelSql =
-            "SELECT id FROM femaleData WHERE (age = ? and height = ? and weight = ? and inseam = ? and armLength = ? and shoulderLength = ? and chestCirc = ? and waistCirc = ? and hipCirc = ? and thighCirc = ? and armCirc = ? and calfCirc = ? and headWidth = ?)";
+        // var selectInsertFModelSql =
+        //     "INSERT INTO objName(filename) SELECT femaleData.id FROM femaleData WHERE (age = ? and height = ? and weight = ? and inseam = ? and armLength = ? and shoulderLength = ? and chestCirc = ? and waistCirc = ? and hipCirc = ? and thighCirc = ? and armCirc = ? and calfCirc = ? and headWidth = ?)"
         db.query(
-            selectModelSql,
+            "INSERT INTO objName(filename) SELECT femaleData.id FROM femaleData WHERE (age = ? and height = ? and weight = ? and inseam = ? and armLength = ? and shoulderLength = ? and chestCirc = ? and waistCirc = ? and hipCirc = ? and thighCirc = ? and armCirc = ? and calfCirc = ? and headWidth = ?)",
             [
-              age_,
-              height_,
-              weight_,
-              inseam_,
-              armLength_,
-              shoulderLength_,
-              chestCirc_,
-              waistCirc_,
-              hipCirc_,
-              thighCirc_,
-              armCirc_,
-              calfCirc_,
-              headWidth_,
-            ],
-            function (err, rows, fields) {
-              if (err) {
-                console.error("error : ", err);
+              result[0].age,
+              result[0].height,
+              result[0].weight,
+              result[0].inseam,
+              result[0].armLength,
+              result[0].shoulderLength,
+              result[0].chestCirc,
+              result[0].waistCirc,
+              result[0].hipCirc,
+              result[0].thighCirc,
+              result[0].armCirc,
+              result[0].calfCirc,
+              result[0].headWidth,
+            ], function (err, result) {
+              if (!err) {
+                console.log(result)
               } else {
-                const filename = rows[0].id;
-                db.query(`INSERT INTO objName (filename)
-                          VALUES (?)`, [filename + ".obj"],
-                    function (error, result) {
-                      if (error) {
-                        console.error("error : ", error);
-                      }
-                    }
-                )
-                ;
+                console.error(err)
               }
-            }
-        );
+            });
       }
     }
-  });
-  // response.writeHead(200);
+  })
+
   response.writeHead(302, {Location: "/renderingModel"});
   response.end();
-});
+})
 
 app.use(static(path.join(__dirname, 'model/obj')));
 app.get("/renderingModel", function (req, res) {
   res.sendFile(path.join(__dirname + "/template/renderingModel.html"));
 });
-//   db.query("SELECT * FROM userBodyData", function (err, rows, fields) {
-//     if (err) {
-//       throw err;
-//     } else {
-//       var gender_ = rows[0].gender;
-//       var age_ = rows[0].age;
-//       var height_ = rows[0].height;
-//       var weight_ = rows[0].weight;
-//       var inseam_ = rows[0].inseam;
-//       var armLength_ = rows[0].armLength;
-//       var shoulderLength_ = rows[0].shoulderLength;
-//       var chestCirc_ = rows[0].chestCirc;
-//       var waistCirc_ = rows[0].waistCirc;
-//       var hipCirc_ = rows[0].hipCirc;
-//       var thighCirc_ = rows[0].thighCirc;
-//       var armCirc_ = rows[0].armCirc;
-//       var calfCirc_ = rows[0].calfCirc;
-//       var headWidth_ = rows[0].headWidth;
-//       if (gender_ === "male") {
-//         var selectModelSql =
-//             "SELECT id FROM maleData WHERE (age = ? and height = ? and weight = ? and inseam = ? and armLength = ? and shoulderLength = ? and chestCirc = ? and waistCirc = ? and hipCirc = ? and thighCirc = ? and armCirc = ? and calfCirc = ? and headWidth = ?)";
-//         db.query(
-//             selectModelSql,
-//             [
-//               age_,
-//               height_,
-//               weight_,
-//               inseam_,
-//               armLength_,
-//               shoulderLength_,
-//               chestCirc_,
-//               waistCirc_,
-//               hipCirc_,
-//               thighCirc_,
-//               armCirc_,
-//               calfCirc_,
-//               headWidth_,
-//             ],
-//             function (err, rows, fields) {
-//               if (err) {
-//                 console.error("error : ", err);
-//               } else {
-//                 const filename = rows[0].id;
-//                 db.query(`INSERT INTO objName (filename)
-//                           VALUES (?)`, [filename + ".obj"],
-//                     function (error, result) {
-//                       if (error) {
-//                         throw error;
-//                       }
-//                     });
-//
-//                 res.writeHead(200);
-//                 res.end();
-//               }
-//             }
-//         );
-//       } else {
-//         var selectModelSql =
-//             "SELECT id FROM femaleData WHERE (age = ? and height = ? and weight = ? and inseam = ? and armLength = ? and shoulderLength = ? and chestCirc = ? and waistCirc = ? and hipCirc = ? and thighCirc = ? and armCirc = ? and calfCirc = ? and headWidth = ?)";
-//         db.query(
-//             selectModelSql,
-//             [
-//               age_,
-//               height_,
-//               weight_,
-//               inseam_,
-//               armLength_,
-//               shoulderLength_,
-//               chestCirc_,
-//               waistCirc_,
-//               hipCirc_,
-//               thighCirc_,
-//               armCirc_,
-//               calfCirc_,
-//               headWidth_,
-//             ],
-//             function (err, rows, fields) {
-//               if (err) {
-//                 console.error("error : ", err);
-//               } else {
-//                 const filename = rows[0].id;
-//                 db.query(`INSERT INTO objName (filename)
-//                           VALUES (?)`, [filename + ".obj"],
-//                     function (error, result) {
-//                       if (error) {
-//                         throw error;
-//                       }
-//                     });
-//
-//                 res.writeHead(200);
-//                 res.end();
-//               }
-//             }
-//         );
-//       }
-//     }
-//   });
-// });
+
 app.listen(port);
+
