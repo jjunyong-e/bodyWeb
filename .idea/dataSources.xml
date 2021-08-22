@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="bodyWebDB" uuid="1a520f91-5197-479e-9bec-1820b64e41a7">
+    <data-source source="LOCAL" name="BodyWebDB" uuid="7ec9dd3b-9309-43c7-8ea8-ab1d2e63f2cd">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/bodyWebDB</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/BodyWebDB</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
