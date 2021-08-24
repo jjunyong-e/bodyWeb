@@ -85,15 +85,15 @@ app.get('/measurements', function (req, res) {
         shell: '/bin/zsh',
         windowshide: true
       }
-      var command = `zsh\nconda init zsh\nconda activate bodyweb\ncd ~/project/bodyWeb/\n
-      python3 calc.py -i sample_data/input/so.jpg -ht ${height_}`;
-      console.log(command);
-      exec(command, options = option, function (err, stdout, stderr) {
-            if (err) {
-              return console.error('exec error:', err);
-            }
-            console.log('stdout:', stdout);
-            console.log('stderr:', stderr);
+
+      var command =
+          `conda run -n bodyweb python3 calc.py -i sample_data/input/so.jpg -ht ${height_}`
+
+      exec(command,
+          function (error, stdout, stderr) {
+            console.log(error)
+            console.log(stdout)
+            console.log(stderr)
           }
       )
       ;
