@@ -11,3 +11,7 @@
 <p></p> 
 
 <h2>예정 사항</h2>
+<p></p>
+1. threejs texture loader로 모델에 텍스쳐 입히기
+2. 텍스쳐는 human extractor 로 추출되나 
+<p></p>
