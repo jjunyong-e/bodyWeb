@@ -1,0 +1,32 @@
+<h2>신체 변환 시뮬레이터</h2>
+<hr>
+
+    <h3>정보를 입력해주세요</h3>
+    <form action='/insertInfo' method='POST'>
+    성별 : <label>
+    	<input type='radio' name='gender' value='female'>
+    	여성
+    </label>
+    	<label>
+    		<input type='radio' name='gender' value='male'>
+    		남성
+    	</label><br>
+
+      <label>
+      		키 :
+      		<input type='text' name='height' placeholder='키(cm)' onblur="this.placeholder='키(cm)'"
+      					 onfocus='this.placeholder = ""'>
+      	</label><br>
+      	<label>
+              		체중 :
+              		<input type='text' name='weight' placeholder='체중(kg)' onblur="this.placeholder='체중(kg)'"
+              					 onfocus='this.placeholder = ""'>
+              	</label><br>
+          <label>
+                		나이  :
+                		<input type='text' name='age' placeholder='나이' onblur="this.placeholder='나이'"
+                					 onfocus='this.placeholder = ""'>
+                	</label><br>
+      		<input type='submit' name='infoSubmit' value='제출'>
+    </form>
+    <hr>
