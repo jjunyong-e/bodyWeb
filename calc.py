@@ -126,7 +126,7 @@ print('model loaded successfully!')
 
 image = Image.open(dir_name)
 
-back = cv2.imread('sample_data/input/background.jpeg', cv2.IMREAD_COLOR)
+back = cv2.imread('sample_data/input/background.jpg', cv2.IMREAD_COLOR)
 
 res_im, seg = MODEL.run(image)
 
@@ -145,7 +145,7 @@ bg_removed = res + (255 - cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR))
 #   print(i)
 
 if __name__ == '__main__':
-  height = 179
+  height = 174
   measure_dict = {}
   bg_removed = res + (255 - cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR))
   measure = main(bg_removed, height, None)
