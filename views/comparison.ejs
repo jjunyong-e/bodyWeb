@@ -45,7 +45,7 @@
 
   var object1;
   var body1;
-  loader1.load('/10-M-3D0001E.obj',
+  loader1.load('<%=objName%>',
       function (object1) {
         object1.traverse(function (body1) {
           if (body1 instanceof THREE.Mesh) {
@@ -90,7 +90,7 @@ var scene2 = new THREE.Scene();
 
   var object2;
   var body2;
-  loader2.load('/20avgm.obj.obj',
+  loader2.load('<%=typeName%>',
       function (object2) {
         object2.traverse(function (body2) {
           if (body2 instanceof THREE.Mesh) {

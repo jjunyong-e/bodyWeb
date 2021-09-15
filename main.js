@@ -85,8 +85,8 @@ app.get('/measurements', function (req, res) {
     if (err) {
       console.error(err);
     } else {
-
-      var height_ = result[0].height
+       var length_ = result.length-1;
+      var height_ = result[length_].height
       console.log(height_)
       var option = {
         shell: '/bin/zsh',
@@ -114,10 +114,11 @@ app.get('/measurements', function (req, res) {
   const dataJson = dataBuffer.toString()
   const data = JSON.parse(dataJson)
   db.query("SELECT * FROM userInfo",function(err,res){
-    var age_ = res[0].age
-    var height_ = res[0].height
-    var weight_ = res[0].weight
-    var gender_ = res[0].gender
+  var length_ = res.length - 1;
+    var age_ = res[length_].age
+    var height_ = res[length_].height
+    var weight_ = res[length_].weight
+    var gender_ = res[length_].gender
     var chestCirc_ = data.chest
     var waistCirc_ = data.waist
     var bellyCirc_ = data.belly
@@ -159,19 +160,20 @@ app.get("/finding",function(err,res){
         });
   };
   getinfo(function(err2,res2){
-    var gender_ = res2[0].gender;
-    var age_ = Math.floor(res2[0].age/10)*10;
-    height_ = res2[0].height;
-    var weight_  = res2[0].weight;
-    var bellyCirc_ = res2[0].bellyCirc;
-    var waistCirc_ = res2[0].waistCirc;
-    var chestCirc_ = res2[0].chestCirc;
-    var wristCirc_ = res2[0].wristCirc;
-    var armLength_ = res2[0].armLength;
-    var shoulderWidth_ = res2[0].shoulderWidth;
-    var thighCirc_ = res2[0].thighCirc;
-    var hipsCirc_ = res2[0].hipsCirc;
-    var neckCirc_ = res2[0].neckCirc;
+  var length_ = res2.length - 1;
+    var gender_ = res2[length_].gender;
+    var age_ = Math.floor(res2[length_].age/10)*10;
+    var height_ = res2[length_].height;
+    var weight_  = res2[length_].weight;
+    var bellyCirc_ = res2[length_].bellyCirc;
+    var waistCirc_ = res2[length_].waistCirc;
+    var chestCirc_ = res2[length_].chestCirc;
+    var wristCirc_ = res2[length_].wristCirc;
+    var armLength_ = res2[length_].armLength;
+    var shoulderWidth_ = res2[length_].shoulderWidth;
+    var thighCirc_ = res2[length_].thighCirc;
+    var hipsCirc_ = res2[length_].hipsCirc;
+    var neckCirc_ = res2[length_].neckCirc;
 
     var maleModels = [];
 
@@ -196,7 +198,8 @@ app.get("/finding",function(err,res){
       if (err3) {
         throw err3;
       } else{
-          db.query("insert into objName values (?,?)",["/"+res3[0].id+".obj","/"+res3[0].type+".obj"],function(err4,res4){
+      var length_ =res3.length-1;
+          db.query("insert into objName values (?,?)",["/"+res3[length_].id+".obj","/"+res3[length_].type+".obj"],function(err4,res4){
           if (err4){
           throw err4;
           }
@@ -227,7 +230,8 @@ app.get("/finding",function(err,res){
         if (err3){
           throw err3;
         } else{
-          db.query("insert into objName values (?,?)",["/"+res3[0].id+"E.obj","/"+res3[0].type+".obj"],function(err4,res4){
+        var length_ = re3.length -1 ;
+          db.query("insert into objName values (?,?)",["/"+res3[length_].id+"E.obj","/"+res3[length_].type+".obj"],function(err4,res4){
             if (err4){
               throw err4;
             }
@@ -243,13 +247,71 @@ app.get("/finding",function(err,res){
 //comparison
 app.use(static(path.join(__dirname+ '/models/obj')));
 app.get("/comparison",function(err,res){
-  res.render("comparison",
-      // {ref: '/20avgf.obj'}
-  )
+  var results = [];
 
-})
+    var getinfo = function (callback) {
+      db.query("SELECT * FROM objName",
+          function (err, res, fields) {
+            if (err) {
+              return callback(err);
+            }
+            if (res.length) {
+              for (var i = 0; i < res.length; i++) {
+                results.push(res[i]);
+              }
+            }
+            callback(null, results);
+          });
+    };
+
+    getinfo(function(err2,res2){
+    var length_ = res2.length -1 ;
+    var objName_ = res2[length_].fileName;
+    var typeName_ = res2[length_].typeName;
+    res.render("comparison",{typeName: typeName_, objName: objName_})
+    });
+    res.writeHead(302,{Location: '/rendering'});
+});
+
 //rendering추가
+app.use(static(path.join(__dirname+ '/models/obj')));
+app.get("/rendering",function(err,res){
+var origins = [];
 
+  var getOrigins = function (callback) {
+    db.query("SELECT * FROM userBodyData",
+        function (err, res, fields) {
+          if (err) {
+            return callback(err);
+          }
+          if (res.length) {
+            for (var i = 0; i < res.length; i++) {
+              origins.push(res[i]);
+            }
+          }
+          callback(null, origins);
+        });
+  };
+  getOrigins(function(err2,res2){
+   var length_ = res2.length - 1;
+     var gender_ = res2[length_].gender;
+     var age_ = Math.floor(res2[length_].age/10)*10;
+     var height_ = res2[length_].height;
+     var weight_  = res2[length_].weight;
+     var bellyCirc_ = res2[length_].bellyCirc;
+     var waistCirc_ = res2[length_].waistCirc;
+     var chestCirc_ = res2[length_].chestCirc;
+     var wristCirc_ = res2[length_].wristCirc;
+     var armLength_ = res2[length_].armLength;
+     var shoulderWidth_ = res2[length_].shoulderWidth;
+     var thighCirc_ = res2[length_].thighCirc;
+     var hipsCirc_ = res2[length_].hipsCirc;
+     var neckCirc_ = res2[length_].neckCirc;
+
+
+  })
+
+}
 //연결
 var port = 3400;
 app.listen(port, function () {
