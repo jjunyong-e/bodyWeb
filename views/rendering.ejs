@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>운동계획 별 체형 확인 </title>
+</head>
+
+<body ontouchstart="">
+<!-- 제목 -->
+<h1>운동 계획 별 체형 변화 확인</h1>
+<div>
+<button value = "가슴/허벅지운동 -  14주 1세트 결과확인" onclick = 'cname0'>가슴/허벅지운동 -  14주 1세트 결과확인</button>
+<button type = 'button'value = "가슴/허벅지운동 -  14주 3세트 결과확인" onclick = 'cname1'>"가슴/허벅지운동 -  14주 3세트 결과확인"</button>
+<button type = 'button'value = "저항운동 10주 3세트 결과확인" onclick = 'cname2()'>저항운동 10주 3세트 결과확인</button>
+<button type = 'button'value = "저항운동 10주 6세트 결과확인" onclick = 'cname3()'>저항운동 10주 6세트 결과확인</button>
+<button type = 'button'value = "저항운동 10주 12세트 결과확인" onclick = 'cname4()'>저항운동 10주 12세트 결과확인</button>
+<button type = 'button'value = "유산소운동 - 12 주 결과 확인" onclick = 'cname5()'>유산소운동 - 12 주 결과 확인</button>
+<button type = 'button'value = "유산소운동 - 48 주 결과 확인" onclick = 'cname6()'>유산소운동 - 48 주 결과 확인</button>
+
+</div>
+
+<script type="module">
+  import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.122.0/build/three.module.js";
+  import {OrbitControls} from "https://cdn.jsdelivr.net/npm/three@0.122.0/examples/jsm/controls/OrbitControls.js";
+  import {OBJLoader} from "https://cdn.jsdelivr.net/npm/three@0.122.0/examples/jsm/loaders/OBJLoader.js";
+  import {MeshNormalMaterial} from "https://cdn.jsdelivr.net/npm/three@0.122.0/src/materials/MeshNormalMaterial.js";
+
+  var scene1 = new THREE.Scene();
+  var camera1 = new THREE.PerspectiveCamera(90, 1, 1, 100000);
+  camera1.position.x = 20000;
+  camera1.position.y = 13000;
+  camera1.position.z = 0;
+
+  var renderer1 = new THREE.WebGLRenderer();
+  renderer1.setSize(window.innerWidth * 0.7, window.innerHeight * 0.7);
+  renderer1.setClearColor(0x000);
+  renderer1.border;
+  document.body.appendChild(renderer1.domElement);
+
+  var controls1 = new OrbitControls(camera1, renderer1.domElement);
+  controls1.update();
+
+  animate1();
+
+  function animate1() {
+    requestAnimationFrame(animate1);
+    controls1.update();
+    renderer1.render(scene1, camera1);
+  }
+
+  var loader1 = new OBJLoader();
+  var material1 = new MeshNormalMaterial();
+
+  var object1;
+  var body1;
+  function cname0 () {
+  filename = filename0;
+  return filename;
+  }
+  function cname1 () {
+  filename = filename1;
+  return filename;
+  }
+  function cname2 () {
+  filename = filename2;
+  return filename;
+  }
+  function cname3 () {
+  filename = filename3;
+  return filename;
+  }
+  function cname4 () {
+  filename = filename4;
+  return filename;
+  }
+  function cname5 () {
+  filename = filename5;
+  return filename;
+  }
+  function cname6 () {
+  filename = filename6;
+  return filename;
+}
+
+  var filename = '/10-M-3D0001E.obj';
+  var filename0 = '<%=name0%>';
+  var filename1 = '<%=name1%>';
+  var filename2 = '<%=name2%>';
+  var filename3 = '<%=name3%>';
+  var filename4 = '<%=name4%>';
+  var filename5 = '<%=name5%>';
+  var filename6 = '<%=name6%>';
+  loader1.load(filename,
+      function (object1) {
+        object1.traverse(function (body1) {
+          if (body1 instanceof THREE.Mesh) {
+            body1.material = material1;
+            body1.rotation.x = (Math.PI / 360 * 0);
+            body1.rotation.y = (Math.PI / 360 * 260);
+            body1.rotation.z = (Math.PI / 360 * 0);
+          }
+        });
+
+        scene1.add(object1);
+        return;
+      });
+
+</script>
+
+</body>
+</html>

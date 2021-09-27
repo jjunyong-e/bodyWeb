@@ -10,7 +10,9 @@
 <body ontouchstart="">
 <!-- 제목 -->
 <h1>표준체형과의 비교</h1>
-
+    <form action="/change" enctype="multipart/form-data" method="get">
+      <button type="submit" >운동별 체형 변화 확인 </button>
+    </form>
 <script type="module">
   import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.122.0/build/three.module.js";
   import {OrbitControls} from "https://cdn.jsdelivr.net/npm/three@0.122.0/examples/jsm/controls/OrbitControls.js";
@@ -25,7 +27,7 @@
 
   var renderer1 = new THREE.WebGLRenderer();
   renderer1.setSize(window.innerWidth * 0.4, window.innerHeight * 0.7);
-  renderer1.setClearColor(0xffffff);
+  renderer1.setClearColor(0x000);
   renderer1.border;
   document.body.appendChild(renderer1.domElement);
 
@@ -63,14 +65,14 @@
 
 // 사용자모델
 var scene2 = new THREE.Scene();
-  var camera2 = new THREE.PerspectiveCamera(90, 1, 10000, 2000000);
+  var camera2 = new THREE.PerspectiveCamera(90, 1, 1, 100000);
   camera2.position.x = 18000;
   camera2.position.y = 18000;
   camera2.position.z = -16000;
 
   var renderer2 = new THREE.WebGLRenderer();
   renderer2.setSize(window.innerWidth * 0.4, window.innerHeight * 0.7);
-  renderer2.setClearColor(0xffffff);
+  renderer2.setClearColor(0x000);
   renderer2.border;
   document.body.appendChild(renderer2.domElement);
 
