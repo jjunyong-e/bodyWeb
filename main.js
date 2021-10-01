@@ -13,7 +13,16 @@ var exec = require("child_process").exec;
 //upload 모듈
 var multer = require("multer");
 const serveStatic = require("serve-static");
-var upload = multer({ dest: "sample_data/input/" });
+var storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, "./sample_data/input");
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.originalname);
+  },
+});
+
+var upload = multer({ storage: storage }).single("attachments");
 
 //db연결
 var db = mysql.createConnection({
@@ -31,14 +40,35 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //배경사진 업로드
 app.get("/", function (req, res) {
   res.render("uploadBackground");
+});
+app.post("/uploadBackground", async (req, res) => {
+  upload(req, res, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      var FileName = req.file.filename;
+      res.status(200).send(FileName);
+    }
+  });
+  res.writeHead(302, { Location: "/uploadHuman" });
   res.end();
 });
-
 // 사람사진 업로드
 app.get("/uploadHuman", function (req, res) {
   res.render("uploadHuman");
 });
-
+app.post("/uploadHuman", async (req, res) => {
+  upload(req, res, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      var FileName = req.file.filename;
+      res.status(200).send(FileName);
+    }
+  });
+  res.writeHead(302, { Location: "/insertInfo" });
+  res.end();
+});
 //키입력
 app.get("/insertInfo", function (req, res) {
   res.render("insertInfo");
@@ -323,7 +353,6 @@ app.get("/comparison", function (err, res) {
     res.render("comparison", { typeName: typeName_, objName: objName_ });
     res.end();
   });
-
 });
 
 //rendering추가
@@ -538,7 +567,7 @@ app.get("/change", function (err, res) {
 });
 app.use(static(path.join(__dirname + "/models/obj")));
 app.get("/rendering", function (err, res) {
-var models = [];
+  var models = [];
 
   var getModels = function (callback) {
     db.query("SELECT * FROM maleModels", function (err, res, fields) {
@@ -553,16 +582,24 @@ var models = [];
       callback(null, models);
     });
   };
-  getModels(function(err2,res2){
+  getModels(function (err2, res2) {
     name0_ = res2[0].id;
     name1_ = res2[1].id;
-    name2_= res2[2].id;
+    name2_ = res2[2].id;
     name3_ = res2[3].id;
-    name4_= res2[4].id;
+    name4_ = res2[4].id;
     name5_ = res2[5].id;
     name6_ = res2[6].id;
-    res.render('rendering',{name0 : name0_,name1:name1_,name2:name2_,name3:name3_,name4:name4_,name5:name5_,name6:name6_})
-  })
+    res.render("rendering", {
+      name0: name0_,
+      name1: name1_,
+      name2: name2_,
+      name3: name3_,
+      name4: name4_,
+      name5: name5_,
+      name6: name6_,
+    });
+  });
 });
 //연결
 var port = 3400;
