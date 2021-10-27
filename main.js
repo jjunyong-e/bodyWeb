@@ -25,14 +25,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage }).single("attachments");
 
 //db연결
-var db = mysql.createConnection({
-  host: "bodywebdb.cnrtoyi1tcyy.ap-northeast-2.rds.amazonaws.com",
-  user: "root",
-  password: "grom0419",
-  database: "BodyWebDB",
-  multipleStatements: true,
-});
-db.connect();
+
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
